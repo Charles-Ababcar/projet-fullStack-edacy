@@ -33,22 +33,36 @@ export class AuthService {
     return result;
   }
 
-  async login(user: any, res: Response) {
-    const payload = { sub: user.id, username: user.username };
-    const token = this.jwtService.sign(payload);
 
+
+  async login(user: any, res: Response) {
+    const payload = { 
+      sub: user.id, 
+      username: user.username,
+    };
+    
+    // Génération du token avec expiration de 1h
+    const token = this.jwtService.sign(payload, { 
+      expiresIn: '1h' // Modification ici
+    });
+  
+    // Configuration du cookie
     res.cookie('access_token', token, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === 'production', // Secure en production seulement
       sameSite: 'strict',
-      maxAge: 1000 * 60, // Expiration du cookie après 60 secondes (1 minute)
-      path: '/', // Le cookie est accessible sur tout le site
+      maxAge: 1000 * 60 * 60, // 1 heure = 60 minutes × 60 secondes × 1000 ms
+      path: '/',
+      domain: process.env.COOKIE_DOMAIN // À définir dans les variables d'environnement
     });
-
+  
     return {
       status: 'success',
       message: 'Connexion réussie ✅',
-      data: user,
+      data: {
+        id: user.id,
+        username: user.username,
+      }
     };
   }
 

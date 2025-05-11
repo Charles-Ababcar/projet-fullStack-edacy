@@ -15,7 +15,7 @@ import { User } from 'src/tables';
   imports :[
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '1h' },
     }),
     PassportModule.register({  defaultStrategy: 'jwt' }),
     TypeOrmModule.forFeature([User]),

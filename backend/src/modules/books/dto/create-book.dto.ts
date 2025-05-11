@@ -25,5 +25,5 @@ export class CreateBookDto {
 
   @ApiProperty()
   @IsInt()
-  userId: number; // Identifiant de l'utilisateur associé
+  userId: number; 
 }

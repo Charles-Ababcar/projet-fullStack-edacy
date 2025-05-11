@@ -1,37 +1,57 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UseGuards, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Put,
+  UseGuards,
+  Req,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
-import { Book } from 'src/models/books.entity';
+
 
 @Controller('books')
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
-  @UseGuards(JwtAuthGuard) 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  async create(@Body() createBookDto: CreateBookDto, @Req() req) {
-    return this.booksService.create(createBookDto, req);
+  async create(@Body() dto: CreateBookDto, @Req() req) {
+    const userId = req.user?.userId;
+    return this.booksService.create(dto, userId);
   }
-  @UseGuards(JwtAuthGuard) 
+
+  @UseGuards(JwtAuthGuard)
   @Get()
-  async findAll(req) {
-    return this.booksService.findAll(req);
+  async findAll(@Req() req) {
+    return this.booksService.findAll(req.user.userId);
   }
-  @UseGuards(JwtAuthGuard) 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async findOne(@Param('id') id: number) {
+  async findOne(@Param('id', ParseIntPipe) id: number) {
     return this.booksService.findOne(id);
   }
-  @UseGuards(JwtAuthGuard) 
-  @Put(':id')
-  async update(@Param('id') id: number, @Body() updateBookDto: UpdateBookDto,req) {
-    return this.booksService.update(id, updateBookDto,req);
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id')
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdateBookDto,
+    @Req() req,
+  ) {
+    return this.booksService.update(id, dto, req.user.userId);
   }
-  @UseGuards(JwtAuthGuard) 
+
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  async remove(@Param('id') id: number,req) {
-    return this.booksService.remove(id,req);
+  async remove(@Param('id', ParseIntPipe) id: number, @Req() req) {
+    return this.booksService.remove(id, req.user.userId);
   }
 }
