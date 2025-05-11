@@ -20,3 +20,12 @@ Une application de gestion de livres construite avec **React**, **NestJS**, **Ta
 ```bash
 git clone https://github.com/Charles-Ababcar/projet-fullStack-edacy.git
 cd projet-fullStack-edacy
+
+voici le fichier
+#.env
+DB_HOST=localhost
+DB_PORT=3307
+DB_USER=nom_user
+DB_PASS=nom_bd
+DB_NAME=bd_edacy
+PORT=3002
