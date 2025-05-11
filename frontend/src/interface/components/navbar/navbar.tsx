@@ -11,7 +11,6 @@ import {
 } from "@mantine/core";
 import {
   IconDashboard,
-  IconSettings,
   IconLogout,
   IconChevronLeft,
   IconBook2,
@@ -29,11 +28,9 @@ const navItems = [
     label: "Livres",
     href: "/books",
     links: [
-      { label: "Crée livre ", link: BookPath.CREATE },
       { label: "Liste des livres", link: BookPath.LIST },
     ],
   },
-  { icon: IconSettings, label: "Paramètres", href: "/settings" },
 ];
 
 interface NavbarProps {
@@ -47,7 +44,7 @@ export const Navbar = ({ compact = false, onToggleCompact }: NavbarProps) => {
   const [openedAccordions, setOpenedAccordions] = useState<
     Record<string, boolean>
   >({});
- const [logout, ] = authApi.useLogoutMutation();
+  const [logout, ] = authApi.useLogoutMutation();
   const handleLogout = () => {
     logout
     setShowLogoutModal(false);
@@ -88,7 +85,6 @@ export const Navbar = ({ compact = false, onToggleCompact }: NavbarProps) => {
         )}
       </div>
 
-      {/* Bouton de réduction */}
       {!compact && (
         <UnstyledButton
           onClick={onToggleCompact}
@@ -186,7 +182,6 @@ export const Navbar = ({ compact = false, onToggleCompact }: NavbarProps) => {
         })}
       </nav>
 
-      {/* Bouton Déconnexion */}
       <div className="px-2 py-4 border-t border-gray-100">
         {compact ? (
           <Tooltip label="Déconnexion" position="right">
@@ -215,7 +210,7 @@ export const Navbar = ({ compact = false, onToggleCompact }: NavbarProps) => {
         )}
       </div>
 
-      {/* Popup confirmation déconnexion */}
+
       <Modal
         opened={showLogoutModal}
         onClose={() => setShowLogoutModal(false)}
