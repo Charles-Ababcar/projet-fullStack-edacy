@@ -36,7 +36,11 @@ export const bookApi = createApi({
       }),
       transformErrorResponse:errorTrasform,
       invalidatesTags: ['books']
-    })
+    }),
+    getBookCount: builder.query({
+      query: () => '/books/count/user',
+      transformErrorResponse: errorTrasform,
+    }),
   })
 })
 
@@ -44,5 +48,6 @@ export const {
   useGetBooksQuery,
   useCreateBookMutation,
   useUpdateBookMutation,
-  useDeleteBookMutation
+  useDeleteBookMutation,
+  useGetBookCountQuery
 } = bookApi

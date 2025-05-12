@@ -10,6 +10,7 @@ import { IconChevronDown, IconUser, IconLogout } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { authApi } from "../../../feature/slice/auth.slice";
+import { useGetBookCountQuery } from "../../../feature/slice/book.slice";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -17,12 +18,15 @@ export const Header = () => {
   const [logout, ] = authApi.useLogoutMutation();
   const [opened, setOpened] = useState(false);
 
+ 
+
   const profileName = profile?.data?.displayName;
 
   const handleLogout = async () => {
     await logout('');
     navigate("/");
   };
+
 
   return (
     <Group justify="space-between" className="w-full">

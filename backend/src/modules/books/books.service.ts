@@ -123,5 +123,13 @@ export class BooksService {
       );
     }
   }
+
+  async countBooksByUser(userId: number): Promise<number> {
+    return this.booksRepository.count({
+      where: {
+        userId,
+      },
+    });
+  }
 }
 

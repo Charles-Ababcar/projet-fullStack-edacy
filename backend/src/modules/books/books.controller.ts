@@ -54,4 +54,11 @@ export class BooksController {
   async remove(@Param('id', ParseIntPipe) id: number, @Req() req) {
     return this.booksService.remove(id, req.user.userId);
   }
+
+  @UseGuards(JwtAuthGuard)
+@Get('count/user')
+async countBooksForUser(@Req() req) {
+  const userId = req.user?.userId;
+  return this.booksService.countBooksByUser(userId);
+}
 }
