@@ -7,8 +7,8 @@ export function DashboardHome() {
   const stat = {
     title: "Mes Livres",
     value: isLoading ? "..." : bookCount ?? "0",
-    change: "+0%", // Valeur fictive, à remplacer si besoin
-    trend: "up",   // Idem, à ajuster selon ta logique
+    change: "+0%", 
+    trend: "up",   
   };
 
   return (
